@@ -117,95 +117,163 @@ var numerical = [1,
 //initialises an empty array to store the password characters in
 var passwordCharacters = [];
 
-//sets the desired amount of passworkd characters to passwordLength
-var passwordLength = prompt("How many characters would you like your password to be?");
-if (passwordLength < 8 && passwordLength >129) {
-  passwordLength = prompt("Your password must be between 8 and 128 characters. How many characters would you like your password to be?");
-  var specCharCon = true
+numberCharacters();
+
+//sets the desired amount of password characters to passwordLength
+function numberCharacters () {
+  var passwordLength = prompt("How many characters would you like your password to be?");
+  //checks to see if the passwrod length is valid
+  if (passwordLength < 8 || passwordLength >129) {
+    passwordLength = alert("Your password must be between 8 and 128 characters.");
+    numberCharacters();
+  }
+  return passwordLength;
+  //why is passwordLength not defined it i returned it?
 }
 
+console.log(passwordLength);
+
+
+includeCharacters();
+
+function includeCharacters () {
 //adds the array of capital letters to the passwordCharacters array (if want an array within in array use .push())
-if (confirm("Would you like to include capital letters?")) {
-  passwordCharacters = passwordCharacters.concat(upperCase);
-  console.log(passwordCharacters);
-} else {
-  passwordCharacters;
-  console.log(passwordCharacters);
+  if (confirm("Would you like to include capital letters?")) {
+    passwordCharacters = passwordCharacters.concat(upperCase);
+    var upperCondition = true;
+  } else {
+    passwordCharacters;
+    var upperCondition = false;
+  }
+
+  // adds the array of lowercase letters to the passwordCharacters array (if want an array within in array use .push())
+  if (confirm("Would you like to incude lowercase letters?")) {
+    passwordCharacters = passwordCharacters.concat(lowerCase);
+    var lowerCondition = true;
+  } else {
+    passwordCharacters;
+    var lowerCondition = false;
+  }
+
+  //adds the array of numbers to the passwordCharacters array (if want an array within in array use .push())
+  if (confirm("Would you like to include numbers?")) {
+    passwordCharacters = passwordCharacters.concat(numerical);
+    var numericalCondition = true;
+  } else {
+    passwordCharacters;
+    var numericalCondition = false;
+  }
+
+  //adds the array of specail characters to the passwordCharacters array (if want an array within in array use .push())
+  if (confirm("Would you like to include specail characters?")) {
+    passwordCharacters = passwordCharacters.concat(specialCharacters);
+    var specialCharCondition = true;
+  } else {
+    passwordCharacters;
+    var specialCharCondition = false;
+  }
+}
+//check to make sure the user picked some characers for the password
+while (passwordCharacters.length===0) {
+  alert("You must select at least one desired set of characters to include in your password");
+  includeCharacters();
 }
 
-// adds the array of lowercase letters to the passwordCharacters array (if want an array within in array use .push())
-if (confirm("Would you like to incude lowercase letters?")) {
-  passwordCharacters = passwordCharacters.concat(lowerCase);
-  console.log(passwordCharacters);
-} else {
-  passwordCharacters;
-  console.log(passwordCharacters);
-}
+//passwrod generating function
+// //genterate a random item from the array passwordCharacters
+var Password = [];
 
-//adds the array of numbers to the passwordCharacters array (if want an array within in array use .push())
-if (confirm("Would you like to include numbers?")) {
-  passwordCharacters = passwordCharacters.concat(numerical);
-  console.log(passwordCharacters);
-} else {
-  passwordCharacters;
-  console.log(passwordCharacters);
-}
+generatePassword();
 
-//adds the array of specail characters to the passwordCharacters array (if want an array within in array use .push())
-if (confirm("Would you like to include specail characters?")) {
-  passwordCharacters = passwordCharacters.concat(specialCharacters);
-  console.log(passwordCharacters);
-} else {
-  passwordCharacters;
-  console.log(passwordCharacters);
-}
-
-//need to use passwordLength to select that many characters at random from passwordCharacters
-//how to gurantee that you get at least one of each character type desired?
-
-//genterate a random item from the array passwordCharacters
-for (i = 1; i <= passwordLength; i++) {
-  var password = [];
-  var random = Math.floor(Math.random() * passwordCharacters.length);
-  password = random.push(password)
-  console.log(random, passwordCharacters[random]);
-}
-
-// //make this a function and then return the result which should be an array of the passwordCharacters
-
-// var obj = {
-//   name: "Karra",
-//   age: 34,
-//   bootcampStudent: true
-// }
-
-// console.log(passwordLength);
-
-// //picks a random key from an object
-// for(i=1; i <= passwordLength; i++){
-//   function getRandomProperty(obj) {
-//     var keys = Object.keys(obj);
-//     var randomKey = keys[Math.floor(Math.random() * keys.length)];
-
-//     return randomKey;
-//   }
-  
-// }
-
-// console.log(getRandomProperty(obj));
-
-
-// for (i = 1; i <= passwordLength; i++) {
+// function generatePassword() {
+// for (i = 1; i <= 8; i++) {
 //   var random = Math.floor(Math.random() * passwordCharacters.length);
-//   console.log(random, passwordCharacters[random]);
+//   var passwordRandom = passwordCharacters[random];
+//   console.log(passwordRandom);
+//   Password = Password.push(passwordRandom);
+//   console.log(Password);
+  //need to add passwordChar to the array passwordGen
+  // console.log(random, passwordCharacters[random]);
 // }
+// }
+// arrayA=[];
+// arrayB=[2,3,4,5];
+// arrayC = arrayB.push(arrayA);
+// console.log("Array C = " + arrayC);
 
 
-// if (genteratedPassword.include(specicalCharacters)){
-//   returngP
+// check if array1 and array 2 share common elements
+// function findCommonElement(array1, array2) {
+
+//   // Loop for array1
+//   for (let i = 0; i < array1.length; i++) {
+
+//     // Loop for array2
+//     for (let j = 0; j < array2.length; j++) {
+
+//       //compare all elements of array1 to all elements of array2
+//       if (array1[i] === array2[j]) {
+//         //if there is a common element return true
+//         return true;
+//       }
+//     }
+//   }
+//   // no common elements found...return false
+//   return false;
+// }
+//to test if the generated passsword contains the characters you asked for
+//test if you asked for upperCase to be included in you password
+// if (upperCondition) {
+//   //test if the characters you asked for are incliuded in the generatedPassword
+//   if(findCommonElement(upperCase, pswChar)) {
+//     //leave the loop
+//     //if they are not included generate another password
+//   } else {
+//     generatePassword();
+//   }
 // } else {
-//   password()
+//   //do nothing
 // }
+// // test if you asked for lowerCase to be included in you password
+// if (lowerCondition) {
+//   //test if the characters you asked for are incliuded in the generatedPassword
+//   if (findCommonElement(lowerCase, pswChar)) {
+//     //leave the loop
+//     //if they are not included generate another password
+//   } else {
+//     generatePassword();
+//   }
+// } else {
+//   //do nothing
+// }
+// // test if you asked for numerical to be included in you password
+// if (numericalCondition) {
+//   //test if the characters you asked for are incliuded in the generatedPassword
+//   if (findCommonElement(numerical, pswChar)) {
+//     //leave the loop
+//     //if they are not included generate another password
+//   } else {
+//     generatePassword();
+//   }
+// } else {
+//   //do nothing
+// }
+// // test if you asked for specialCharacters to be included in you password
+// if (specialCharCondition) {
+//   //test if the characters you asked for are incliuded in the generatedPassword
+//   if (findCommonElement(specialCharacters, pswChar)) {
+//     //leave the loop
+//     //if they are not included generate another password
+//   } else {
+//     generatePassword();
+//   }
+// } else {
+//   //do nothing
+// }
+
+
+// var pswd = pswChar.toString();
+// console.log(pswd);
 
 // conditions = []
 // while (true) {
@@ -235,8 +303,3 @@ for (i = 1; i <= passwordLength; i++) {
 // }
 
 
-
-//make passwordCharacters and array of arrays .push
-for (i=0; i<passwordCharacters.length; i++){
-  if (password.include(passwordCharacters[i]))
-}
