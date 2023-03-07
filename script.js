@@ -3,17 +3,17 @@ var generateBtn = document.querySelector("#generate");
 
 // Write password to the #password input
 function writePassword() {
+  numberCharacters();
+  includeCharacters();
   var password = generatePassword();
   var passwordText = document.querySelector("#password");
 
-  passwordText.value = password;
+  passwordText.value = password.join("");
 
 }
 
 // Add event listener to generate button
 generateBtn.addEventListener("click", writePassword);
-
-
 
 var specialCharacters = [" ",
 "!",
@@ -116,190 +116,171 @@ var numerical = [1,
 
 //initialises an empty array to store the password characters in
 var passwordCharacters = [];
+//initialising the passwordLength variable
+var passwordLength;
 
-numberCharacters();
+
 
 //sets the desired amount of password characters to passwordLength
 function numberCharacters () {
-  var passwordLength = prompt("How many characters would you like your password to be?");
-  //checks to see if the passwrod length is valid
-  if (passwordLength < 8 || passwordLength >129) {
+  passwordLength = prompt("How many characters would you like your password to be?");
+  //checks to see if the passwrod length is valid1
+  if (passwordLength < 8 || passwordLength >129 || isNaN(passwordLength)) {
     passwordLength = alert("Your password must be between 8 and 128 characters.");
     numberCharacters();
   }
-  return passwordLength;
-  //why is passwordLength not defined it i returned it?
 }
 
-console.log(passwordLength);
+var upperCondition;
+var lowerCondition;
+var numericalCondition;
+var specialCharCondition;
 
 
-includeCharacters();
-
+//adds the characters the user wants to include to the possible choices
 function includeCharacters () {
+  upperCondition = false;
+  lowerCondition = false;
+  numericalCondition = false;
+  specialCharCondition = false;
 //adds the array of capital letters to the passwordCharacters array (if want an array within in array use .push())
   if (confirm("Would you like to include capital letters?")) {
     passwordCharacters = passwordCharacters.concat(upperCase);
-    var upperCondition = true;
+      upperCondition = true;
   } else {
     passwordCharacters;
-    var upperCondition = false;
+      upperCondition = false;
   }
 
   // adds the array of lowercase letters to the passwordCharacters array (if want an array within in array use .push())
   if (confirm("Would you like to incude lowercase letters?")) {
     passwordCharacters = passwordCharacters.concat(lowerCase);
-    var lowerCondition = true;
+      lowerCondition = true;
   } else {
     passwordCharacters;
-    var lowerCondition = false;
+      lowerCondition = false;
   }
 
   //adds the array of numbers to the passwordCharacters array (if want an array within in array use .push())
   if (confirm("Would you like to include numbers?")) {
     passwordCharacters = passwordCharacters.concat(numerical);
-    var numericalCondition = true;
+      numericalCondition = true;
   } else {
     passwordCharacters;
-    var numericalCondition = false;
+      numericalCondition = false;
   }
 
   //adds the array of specail characters to the passwordCharacters array (if want an array within in array use .push())
   if (confirm("Would you like to include specail characters?")) {
     passwordCharacters = passwordCharacters.concat(specialCharacters);
-    var specialCharCondition = true;
+      specialCharCondition = true;
   } else {
     passwordCharacters;
-    var specialCharCondition = false;
+      specialCharCondition = false;
+  }
+  //check to make sure the user picked some characers for the password
+  while (passwordCharacters.length === 0) {
+    alert("You must select at least one desired set of characters to include in your password");
+    includeCharacters();
   }
 }
-//check to make sure the user picked some characers for the password
-while (passwordCharacters.length===0) {
-  alert("You must select at least one desired set of characters to include in your password");
-  includeCharacters();
+
+//initialises an empty array to store the generated password in
+// var Password = [];
+
+// generatePassword();//removed
+
+// //genterates a random item from the array passwordCharacters and puts it into the array Password
+function generatePassword() {
+  var Password = [];
+  for (i = 1; i <= passwordLength; i++) {
+    var random = Math.floor(Math.random() * passwordCharacters.length);
+    var passwordRandom = passwordCharacters[random];
+    Password.push(passwordRandom);
+  }
+  while (!checkPassword(Password)) {
+    generatePassword();
+  }
+  return Password;
 }
 
-//passwrod generating function
-// //genterate a random item from the array passwordCharacters
-var Password = [];
 
-generatePassword();
+// check if two arrays share common elements
+function findCommonElement(array1, array2) {
 
-// function generatePassword() {
-// for (i = 1; i <= 8; i++) {
-//   var random = Math.floor(Math.random() * passwordCharacters.length);
-//   var passwordRandom = passwordCharacters[random];
-//   console.log(passwordRandom);
-//   Password = Password.push(passwordRandom);
-//   console.log(Password);
-  //need to add passwordChar to the array passwordGen
-  // console.log(random, passwordCharacters[random]);
-// }
-// }
-// arrayA=[];
-// arrayB=[2,3,4,5];
-// arrayC = arrayB.push(arrayA);
-// console.log("Array C = " + arrayC);
+  // Loop for array1
+  for (let i = 0; i < array1.length; i++) {
+
+    // Loop for array2
+    for (let j = 0; j < array2.length; j++) {
+
+      //compare all elements of array1 to all elements of array2
+      if (array1[i] === array2[j]) {
+        //if there is a common element...return true
+        return true;
+      }
+    }
+  }
+  // no common elements found...return false
+  return false;
+}
+
+//test array to check if checkPassword is working
+// var pswChar = ["L", "v", "l", "p"];
 
 
-// check if array1 and array 2 share common elements
-// function findCommonElement(array1, array2) {
+// console.log(findCommonElement(upperCase, pswChar));
+// console.log(findCommonElement(lowerCase, pswChar));
+// console.log(findCommonElement(numerical, pswChar));
+// console.log(findCommonElement(specialCharacters, pswChar));
 
-//   // Loop for array1
-//   for (let i = 0; i < array1.length; i++) {
 
-//     // Loop for array2
-//     for (let j = 0; j < array2.length; j++) {
-
-//       //compare all elements of array1 to all elements of array2
-//       if (array1[i] === array2[j]) {
-//         //if there is a common element return true
-//         return true;
-//       }
-//     }
-//   }
-//   // no common elements found...return false
-//   return false;
-// }
+//this should be in the generatePassword function
 //to test if the generated passsword contains the characters you asked for
+
+//change pswChar to Password after test is complete
 //test if you asked for upperCase to be included in you password
-// if (upperCondition) {
-//   //test if the characters you asked for are incliuded in the generatedPassword
-//   if(findCommonElement(upperCase, pswChar)) {
-//     //leave the loop
-//     //if they are not included generate another password
-//   } else {
-//     generatePassword();
-//   }
-// } else {
-//   //do nothing
-// }
-// // test if you asked for lowerCase to be included in you password
-// if (lowerCondition) {
-//   //test if the characters you asked for are incliuded in the generatedPassword
-//   if (findCommonElement(lowerCase, pswChar)) {
-//     //leave the loop
-//     //if they are not included generate another password
-//   } else {
-//     generatePassword();
-//   }
-// } else {
-//   //do nothing
-// }
-// // test if you asked for numerical to be included in you password
-// if (numericalCondition) {
-//   //test if the characters you asked for are incliuded in the generatedPassword
-//   if (findCommonElement(numerical, pswChar)) {
-//     //leave the loop
-//     //if they are not included generate another password
-//   } else {
-//     generatePassword();
-//   }
-// } else {
-//   //do nothing
-// }
-// // test if you asked for specialCharacters to be included in you password
-// if (specialCharCondition) {
-//   //test if the characters you asked for are incliuded in the generatedPassword
-//   if (findCommonElement(specialCharacters, pswChar)) {
-//     //leave the loop
-//     //if they are not included generate another password
-//   } else {
-//     generatePassword();
-//   }
-// } else {
-//   //do nothing
-// }
+function checkPassword (Password) {
+  var passed = true;
 
+  if (upperCondition) {
+    //test if the characters you asked for are incliuded in the generatedPassword
+    if(!findCommonElement(upperCase, Password)) {
+      console.log("no uppercase characters found")
+      //reset password to an empty array ready for a new password to generate
+      passed = false;
+    }
+  }
+  // test if you asked for lowerCase to be included in you password
+  if (lowerCondition) {
+    //test if the characters you asked for are incliuded in the generatedPassword
+    if (!findCommonElement(lowerCase, Password)) {
+      console.log("no lowercase characters found")
+      //reset password to an empty array ready for a new password to generate
+      passed = false;
+    }
+  }
+  // test if you asked for numerical to be included in you password
+  if (numericalCondition) {
+    //test if the characters you asked for are incliuded in the generatedPassword
+    if (!findCommonElement(numerical, Password)) {
+      console.log("no numerical characters found")
+      //reset password to an empty array ready for a new password to generate
+      passed = false;
+    }
+  }
+  // test if you asked for specialCharacters to be included in you password
+  if (specialCharCondition) {
+    //test if the characters you asked for are incliuded in the generatedPassword
+    if (!findCommonElement(specialCharacters, Password)) {
+      console.log("no special characters found")
+      //reset password to an empty array ready for a new password to generate
+      passed = false;
+    }
+  }
+  return passed;
+}
 
-// var pswd = pswChar.toString();
+//how to properly output the password once all conditions are met and is ready for the user
+// var pswd = Password.toString();
 // console.log(pswd);
-
-// conditions = []
-// while (true) {
-//   password=generatePassword();
-
-//   if(specCharCon) {
-//      if (passwrod.inlcude(specialCharacter){
-//      }
-//   }
-
-//   if (upperCon && passwrod.inlcude(upperCase){
-//   } else {
-//     continue;
-//   }
-
-//   if (lowerCon && passwrod.inlcude(lowerCase){
-//   } else {
-//     continue;
-//   }
-
-//   if (numbrCon && passwrod.inlcude(numerical){
-//   } else {
-//     continue;
-//   }
-
-//   break password; //check if break is in js
-// }
-
-
