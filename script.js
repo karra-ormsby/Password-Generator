@@ -123,8 +123,9 @@ var passwordLength;
 //sets the desired amount of password characters to passwordLength
 function numberCharacters () {
   passwordLength = prompt("How many characters would you like your password to be?");
+
   //checks to see if the passwrod length is valid and if the user has entered a number
-  if (passwordLength < 8 || passwordLength >129 || isNaN(passwordLength)) {
+  if (passwordLength < 8 || passwordLength >128 || isNaN(passwordLength)) {
     passwordLength = alert("Your password must be between 8 and 128 characters.");
     numberCharacters();
   }
@@ -147,44 +148,44 @@ function includeCharacters () {
   //initialises/reinitilaises an empty array to store the password characters in
   passwordCharacters = [];
   
-//adds the array of capital letters to the passwordCharacters array (if want an array within in array use .push())
+//adds the array of capital letters to the passwordCharacters array
   if (confirm("Would you like to include capital letters?")) {
     passwordCharacters = passwordCharacters.concat(upperCase);
-      upperCondition = true;
+    upperCondition = true;
   } else {
     passwordCharacters;
-      upperCondition = false;
+    upperCondition = false;
   }
 
-  // adds the array of lowercase letters to the passwordCharacters array (if want an array within in array use .push())
+  // adds the array of lowercase letters to the passwordCharacters array
   if (confirm("Would you like to incude lowercase letters?")) {
     passwordCharacters = passwordCharacters.concat(lowerCase);
-      lowerCondition = true;
+    lowerCondition = true;
   } else {
     passwordCharacters;
-      lowerCondition = false;
+    lowerCondition = false;
   }
 
-  //adds the array of numbers to the passwordCharacters array (if want an array within in array use .push())
+  //adds the array of numbers to the passwordCharacters array
   if (confirm("Would you like to include numbers?")) {
     passwordCharacters = passwordCharacters.concat(numerical);
-      numericalCondition = true;
+    numericalCondition = true;
   } else {
     passwordCharacters;
-      numericalCondition = false;
+    numericalCondition = false;
   }
 
-  //adds the array of specail characters to the passwordCharacters array (if want an array within in array use .push())
-  if (confirm("Would you like to include specail characters?")) {
+  //adds the array of specail characters to the passwordCharacters array
+  if (confirm("Would you like to include special characters?")) {
     passwordCharacters = passwordCharacters.concat(specialCharacters);
-      specialCharCondition = true;
+    specialCharCondition = true;
   } else {
     passwordCharacters;
-      specialCharCondition = false;
+    specialCharCondition = false;
   }
   //check to make sure the user picked at least one character type for the password
   while (passwordCharacters.length === 0) {
-    alert("You must select at least one desired set of characters to include in your password");
+    alert("You must select at least one desired type of characters to include in your password");
     includeCharacters();
   }
 }
@@ -192,18 +193,18 @@ function includeCharacters () {
 // //genterates a random item from the array passwordCharacters and puts it into the array Password
 function generatePassword() {
   //initialises/reinitilaises an empty string to store the generated password in
-  var Password = [];
+  var generatedPassword = [];
 
   for (i = 1; i <= passwordLength; i++) {
     var random = Math.floor(Math.random() * passwordCharacters.length);
     var passwordRandom = passwordCharacters[random];
-    Password.push(passwordRandom);
+    generatedPassword.push(passwordRandom);
   }
   //if the password does not contain characters from the requested character type, generate a new password
-  while (!checkPassword(Password)) {
+  while (!checkPassword(generatedPassword)) {
     generatePassword();
   }
-  return Password;
+  return generatedPassword;
 }
 
 // check if two arrays share common elements
@@ -224,33 +225,33 @@ function findCommonElement(array1, array2) {
 }
 
 //checks if you password includes the requested character types
-function checkPassword (Password) {
+function checkPassword(generatedPassword) {
   var passed = true;
 
   if (upperCondition) {
     //test if the characters you asked for are incliuded in the generatedPassword
-    if(!findCommonElement(upperCase, Password)) {
+    if (!findCommonElement(upperCase, generatedPassword)) {
       passed = false;
     }
   }
   // test if you asked for lowerCase to be included in you password
   if (lowerCondition) {
     //test if the characters you asked for are incliuded in the generatedPassword
-    if (!findCommonElement(lowerCase, Password)) {
+    if (!findCommonElement(lowerCase, generatedPassword)) {
       passed = false;
     }
   }
   // test if you asked for numerical to be included in you password
   if (numericalCondition) {
     //test if the characters you asked for are incliuded in the generatedPassword
-    if (!findCommonElement(numerical, Password)) {
+    if (!findCommonElement(numerical, generatedPassword)) {
       passed = false;
     }
   }
   // test if you asked for specialCharacters to be included in you password
   if (specialCharCondition) {
     //test if the characters you asked for are incliuded in the generatedPassword
-    if (!findCommonElement(specialCharacters, Password)) {
+    if (!findCommonElement(specialCharacters, generatedPassword)) {
       passed = false;
     }
   }

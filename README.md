@@ -17,7 +17,7 @@ To generate a password the user must click on the generate password button,
 
  ![generate password buttton](./assets/images/Image%20of%20button.png)
 
-and after answering a series of prompts that display on the screen, a password will be outputed in the textbox
+and after answering a series of prompts that display on the screen, a password will be outputed in the textbox.
 
  ![output field](./assets/images/Image%20of%20output%20field.png).
 
@@ -26,4 +26,4 @@ and after answering a series of prompts that display on the screen, a password w
 Starter code provided by Monash Bootcamp (https://git.bootcampcontent.com/Monash-University/MONU-VIRT-FSF-PT-02-2023-U-LOLC/-/tree/main/Week-03/02-Challenge)
 
 Reached out to AskBCS for help with accessing a variable from a funcion in another function.
-Reached out to tutoring services for help with what the starter code does and cleaning up a function.
+Reached out to tutoring services for help with what the starter code does and how to place my checkPassword function most optimally. 
